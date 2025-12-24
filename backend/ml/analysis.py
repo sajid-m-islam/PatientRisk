@@ -5,7 +5,7 @@ import os
 files = ['BMX_L.xpt', 'BPXO_L.xpt', 'DEMO_L.xpt', 'DIQ_L.xpt', 'DR1TOT_L.xpt']
 df = None
 for file in files:
-    base_path = Path(__file__).resolve().parents[1] / 'data' / 'raw' / file
+    base_path = Path(__file__).resolve().parents[2] / 'data' / 'raw' / file
     curr_df = pd.read_sas(base_path, format='xport', encoding='latin-1')
     
     if df is None:
@@ -36,5 +36,5 @@ df_final = df_final.dropna(subset=['diabetes_target'])
 print(df_final.shape[0])
 print(df_final.shape[1])
 
-df.to_csv('cleaned_nhanes_data.csv', index=False)
+# df_final.to_csv('cleaned_nhanes_data.csv', index=False)
 
