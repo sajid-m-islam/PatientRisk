@@ -45,3 +45,10 @@ print(accuracy_score(y_test, y_hat))
 
 cm = confusion_matrix(y_test, y_hat)
 print(cm)
+print(X_train.columns.tolist())
+
+import joblib
+joblib.dump(scaler, 'scaler.pkl')
+
+save_path = 'model.keras'
+model.save(save_path)
