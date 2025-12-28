@@ -43,9 +43,22 @@ export default function App() {
     } else {
         return (
             // home page
-            <div className="bg-blue-300 min-h-screen w-full">
-                <HealthForm />
-            </div>
+            <>
+                <div className="bg-blue-300 min-h-screen w-full flex">
+                    {/* userform */}
+                    <div className="bg-white w-[500px] h-[600px] rounded-2xl overflow-hidden relative top-30 left-15"></div>
+                    <div className="flex flex-col justify-betwen w-[700px] h-[600px] relative top-30 left-40 gap-4">
+                        {/* healthform */}
+                        <div className="bg-white w-full h-[360px] rounded-2xl overflow-hidden p-4">
+                            <div className="relative left-[20px] top-[3px]">
+                                <HealthForm />
+                            </div>
+                        </div>
+                        {/* risk output */}
+                        <div className="bg-white w-full flex-1 rounded-2xl overflow-hidden"></div>
+                    </div>
+                </div>
+            </>
         );
     }
 }

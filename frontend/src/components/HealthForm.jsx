@@ -63,65 +63,115 @@ export default function HealthForm({ onResultReceived }) {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label for="gender">Gender: </label>
-            <br></br>
-            <input type="text" id="gender" name="gender"></input>
-            <br></br>
-            <select id="gender" name="gender">
-                <option value="" selected disabled>
-                    Choose
-                </option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-            </select>
-            <br></br>
-            <label for="age">Age: </label>
-            <br></br>
-            <input type="number" id="age" name="age"></input>
-            <br></br>
-            <label for="ethnicity">Ethnicity: </label>
-            <br></br>
-            <select id="ethnicity" name="ethnicity">
-                <option value="" selected disabled>
-                    Choose
-                </option>
-                <option value="mexicanAmerican">Mexican American</option>
-                <option value="otherHispanic">Other Hispanic</option>
-                <option value="white">Non-Hispanic White</option>
-                <option value="black">Non-Hispanic Black</option>
-                <option value="asian">Non-Hispanic Asian</option>
-                <option value="other">Other Race</option>
-            </select>
-            <br></br>
-            <label for="bmi">BMI: </label>
-            <br></br>
-            <input type="number" id="bmi" name="bmi"></input>
-            <br></br>
-            <label for="waist">Waist Circumference: </label>
-            <br></br>
-            <input type="number" id="waist" name="waist"></input>
-            <br></br>
-            <label for="systolic">Systolic Blood Pressure: </label>
-            <br></br>
-            <input type="systolic" id="systolic" name="systolic"></input>
-            <br></br>
-            <label for="diastolic">Diastolic Blood Pressure: </label>
-            <br></br>
-            <input type="diastolic" id="diastolic" name="diastolic"></input>
-            <br></br>
-            <label for="calories">Calories: </label>
-            <br></br>
-            <input type="number" id="calories" name="calories"></input>
-            <br></br>
-            <label for="sugar">Sugar Intake: </label>
-            <br></br>
-            <input type="sugar" id="sugar" name="sugar"></input>
-            <br></br>
-            <label for="fiber">Fiber Intake: </label>
-            <br></br>
-            <input type="fiber" id="fiber" name="fiber"></input>
-            <br></br>
+        <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-0">
+            <div>
+                <label for="gender">Gender: </label>
+                <br></br>
+                <select
+                    id="gender"
+                    name="gender"
+                    class="border p-2 rounded-2xl"
+                >
+                    <option value="" selected disabled>
+                        Choose
+                    </option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+                <br></br>
+                <label for="age">Age: </label>
+                <br></br>
+                <input
+                    type="number"
+                    id="age"
+                    name="age"
+                    class="border p-2 rounded-2xl"
+                ></input>
+                <br></br>
+                <label for="ethnicity">Ethnicity: </label>
+                <br></br>
+                <select
+                    id="ethnicity"
+                    name="ethnicity"
+                    class="border p-2 rounded-2xl"
+                >
+                    <option value="" selected disabled>
+                        Choose
+                    </option>
+                    <option value="mexicanAmerican">Mexican American</option>
+                    <option value="otherHispanic">Other Hispanic</option>
+                    <option value="white">Non-Hispanic White</option>
+                    <option value="black">Non-Hispanic Black</option>
+                    <option value="asian">Non-Hispanic Asian</option>
+                    <option value="other">Other Race</option>
+                </select>
+                <br></br>
+                <label for="bmi">BMI: </label>
+                <br></br>
+                <input
+                    type="number"
+                    id="bmi"
+                    name="bmi"
+                    class="border p-2 rounded-2xl"
+                ></input>
+                <br></br>
+                <label for="waist">Waist Circumference: </label>
+                <br></br>
+                <input
+                    type="number"
+                    id="waist"
+                    name="waist"
+                    class="border p-2 rounded-2xl"
+                ></input>
+                <br></br>
+            </div>
+            <div>
+                <label for="systolic">Systolic Blood Pressure: </label>
+                <br></br>
+                <input
+                    type="number"
+                    id="systolic"
+                    name="systolic"
+                    class="border p-2 rounded-2xl"
+                ></input>
+                <br></br>
+                <label for="diastolic">Diastolic Blood Pressure: </label>
+                <br></br>
+                <input
+                    type="number"
+                    id="diastolic"
+                    name="diastolic"
+                    class="border p-2 rounded-2xl"
+                ></input>
+                <br></br>
+                <label for="calories">Calories: </label>
+                <br></br>
+                <input
+                    type="number"
+                    id="calories"
+                    name="calories"
+                    class="border p-2 rounded-2xl"
+                ></input>
+                <br></br>
+                <label for="sugar">Sugar Intake: </label>
+                <br></br>
+                <input
+                    type="number"
+                    id="sugar"
+                    name="sugar"
+                    class="border p-2 rounded-2xl"
+                ></input>
+                <br></br>
+                <label for="fiber">Fiber Intake: </label>
+                <br></br>
+                <input
+                    type="number"
+                    id="fiber"
+                    name="fiber"
+                    class="border p-2 rounded-2xl"
+                ></input>
+                <br></br>
+            </div>
         </form>
     );
 }
