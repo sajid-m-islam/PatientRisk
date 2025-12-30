@@ -3,9 +3,11 @@ import { supabase } from "./supabaseClient";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import HealthForm from "./components/HealthForm";
+import RiskFactor from "./components/RiskFactor";
 
 export default function App() {
     const [session, setSession] = useState(null);
+    const [riskResult, setRiskResult] = useState({ score: null, level: null });
 
     useEffect(() => {
         supabase.auth.getSession().then(({ data: { session } }) => {
@@ -55,7 +57,14 @@ export default function App() {
                             </div>
                         </div>
                         {/* risk output */}
-                        <div className="bg-white w-full flex-1 rounded-2xl overflow-hidden"></div>
+                        <div className="bg-white w-full flex-1 rounded-2xl overflow-hidden">
+                            <div className="text-center relative top-[20px]">
+                                <RiskFactor
+                                    score={riskResult.score}
+                                    level={riskResult.level}
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </>

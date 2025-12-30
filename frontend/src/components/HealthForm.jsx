@@ -16,11 +16,20 @@ export default function HealthForm({ onResultReceived }) {
         fiber_intake: "",
     });
 
+    const handleChange = (e) => {
+        const { name, value, type } = e.target;
+
+        setHealthData((prev) => ({
+            ...prev,
+            [name]: type === "number" ? Number(value) : value,
+        }));
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const response = await api.post("risk-factor", healthData);
+            const response = await api.post("/risk-factor", healthData);
             const riskScore = response.data;
             let riskLevel;
             if (riskScore < 0.4) {
@@ -57,26 +66,35 @@ export default function HealthForm({ onResultReceived }) {
                     },
                 ]);
             if (riskError) throw riskError;
+            onResultReceived({ score: riskScore, level: riskLevel });
         } catch (error) {
+            console.log(error);
+            console.log(healthData);
             alert("Error occured submitting form");
         }
     };
 
     return (
-        <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-0">
+        <form
+            id="risk-form"
+            onSubmit={handleSubmit}
+            className="grid grid-cols-2 gap-0"
+        >
             <div>
                 <label for="gender">Gender: </label>
                 <br></br>
                 <select
                     id="gender"
                     name="gender"
+                    value={healthData.gender}
+                    onChange={handleChange}
                     class="border p-2 rounded-2xl"
                 >
                     <option value="" selected disabled>
                         Choose
                     </option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
                 </select>
                 <br></br>
                 <label for="age">Age: </label>
@@ -85,6 +103,8 @@ export default function HealthForm({ onResultReceived }) {
                     type="number"
                     id="age"
                     name="age"
+                    value={healthData.age}
+                    onChange={handleChange}
                     class="border p-2 rounded-2xl"
                 ></input>
                 <br></br>
@@ -93,17 +113,25 @@ export default function HealthForm({ onResultReceived }) {
                 <select
                     id="ethnicity"
                     name="ethnicity"
+                    value={healthData.ethnicity}
+                    onChange={handleChange}
                     class="border p-2 rounded-2xl"
                 >
                     <option value="" selected disabled>
                         Choose
                     </option>
-                    <option value="mexicanAmerican">Mexican American</option>
-                    <option value="otherHispanic">Other Hispanic</option>
-                    <option value="white">Non-Hispanic White</option>
-                    <option value="black">Non-Hispanic Black</option>
-                    <option value="asian">Non-Hispanic Asian</option>
-                    <option value="other">Other Race</option>
+                    <option value="Mexican American">Mexican American</option>
+                    <option value="Other Hispanic">Other Hispanic</option>
+                    <option value="Non-Hispanic White">
+                        Non-Hispanic White
+                    </option>
+                    <option value="Non-Hispanic Black">
+                        Non-Hispanic Black
+                    </option>
+                    <option value="Non-Hispanic Asian">
+                        Non-Hispanic Asian
+                    </option>
+                    <option value="Other Race">Other Race</option>
                 </select>
                 <br></br>
                 <label for="bmi">BMI: </label>
@@ -112,6 +140,8 @@ export default function HealthForm({ onResultReceived }) {
                     type="number"
                     id="bmi"
                     name="bmi"
+                    value={healthData.bmi}
+                    onChange={handleChange}
                     class="border p-2 rounded-2xl"
                 ></input>
                 <br></br>
@@ -120,7 +150,9 @@ export default function HealthForm({ onResultReceived }) {
                 <input
                     type="number"
                     id="waist"
-                    name="waist"
+                    name="waist_circ"
+                    value={healthData.waist_circ}
+                    onChange={handleChange}
                     class="border p-2 rounded-2xl"
                 ></input>
                 <br></br>
@@ -131,7 +163,9 @@ export default function HealthForm({ onResultReceived }) {
                 <input
                     type="number"
                     id="systolic"
-                    name="systolic"
+                    name="systolic_bp"
+                    value={healthData.systolic_bp}
+                    onChange={handleChange}
                     class="border p-2 rounded-2xl"
                 ></input>
                 <br></br>
@@ -140,7 +174,9 @@ export default function HealthForm({ onResultReceived }) {
                 <input
                     type="number"
                     id="diastolic"
-                    name="diastolic"
+                    name="diastolic_bp"
+                    value={healthData.diastolic_bp}
+                    onChange={handleChange}
                     class="border p-2 rounded-2xl"
                 ></input>
                 <br></br>
@@ -150,6 +186,8 @@ export default function HealthForm({ onResultReceived }) {
                     type="number"
                     id="calories"
                     name="calories"
+                    value={healthData.calories}
+                    onChange={handleChange}
                     class="border p-2 rounded-2xl"
                 ></input>
                 <br></br>
@@ -158,7 +196,9 @@ export default function HealthForm({ onResultReceived }) {
                 <input
                     type="number"
                     id="sugar"
-                    name="sugar"
+                    name="sugar_intake"
+                    value={healthData.sugar_intake}
+                    onChange={handleChange}
                     class="border p-2 rounded-2xl"
                 ></input>
                 <br></br>
@@ -167,7 +207,9 @@ export default function HealthForm({ onResultReceived }) {
                 <input
                     type="number"
                     id="fiber"
-                    name="fiber"
+                    name="fiber_intake"
+                    value={healthData.fiber_intake}
+                    onChange={handleChange}
                     class="border p-2 rounded-2xl"
                 ></input>
                 <br></br>
