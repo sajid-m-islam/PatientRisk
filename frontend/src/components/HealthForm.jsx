@@ -27,10 +27,8 @@ export default function HealthForm({ onResultReceived }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("1. Submit started"); // Check if button works
         try {
             const response = await api.post("/risk-factor", healthData);
-            console.log("2. API responded:", response.data); // Check if Python works
             console.log(response.data);
             const riskScore = Number(response.data.risk_score.toFixed(2));
             let riskLevel;
@@ -74,6 +72,7 @@ export default function HealthForm({ onResultReceived }) {
                     },
                 ]);
             if (riskError) throw riskError;
+            console.log(healthData);
             onResultReceived({ score: riskScore, level: riskLevel });
         } catch (error) {
             console.log(error);

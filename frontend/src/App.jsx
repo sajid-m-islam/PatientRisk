@@ -46,23 +46,33 @@ export default function App() {
         return (
             // home page
             <>
-                <div className="bg-blue-300 min-h-screen w-full flex">
-                    {/* userform */}
-                    <div className="bg-white w-[500px] h-[600px] rounded-2xl overflow-hidden relative top-30 left-15"></div>
-                    <div className="flex flex-col justify-betwen w-[700px] h-[600px] relative top-30 left-40 gap-4">
-                        {/* healthform */}
-                        <div className="bg-white w-full h-[360px] rounded-2xl overflow-hidden p-4">
-                            <div className="relative left-[20px] top-[3px]">
-                                <HealthForm onResultReceived={setRiskResult} />
+                <div className="min-h-screen w-full flex flex-col">
+                    <nav className="bg-white w-full h-16 flex items-center shadow-2xs justify-between px-6 z-10">
+                        <h1 className="text-xl font-bold text-blue-900 text-[30px]">
+                            Patient Risk
+                        </h1>
+                        <p>Welcome User</p>
+                    </nav>
+                    <div className="bg-blue-300 flex-1 w-full flex relative">
+                        {/* userform */}
+                        <div className="bg-white w-[500px] h-[600px] rounded-2xl overflow-hidden relative top-20 left-15 shadow-xl"></div>
+                        <div className="flex flex-col justify-between w-[700px] h-[600px] relative top-20 left-40 gap-4">
+                            {/* healthform */}
+                            <div className="bg-white w-full h-[360px] rounded-2xl overflow-hidden p-4 shadow-xl">
+                                <div className="relative left-[20px] top-[3px]">
+                                    <HealthForm
+                                        onResultReceived={setRiskResult}
+                                    />
+                                </div>
                             </div>
-                        </div>
-                        {/* risk output */}
-                        <div className="bg-white w-full flex-1 rounded-2xl overflow-hidden">
-                            <div className="text-center relative top-[20px]">
-                                <RiskFactor
-                                    score={riskResult.score}
-                                    level={riskResult.level}
-                                />
+                            {/* risk output */}
+                            <div className="bg-white w-full flex-1 rounded-2xl overflow-hidden shadow-xl">
+                                <div className="text-center relative top-[20px]">
+                                    <RiskFactor
+                                        score={riskResult.score}
+                                        level={riskResult.level}
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
