@@ -53,7 +53,7 @@ export default function App() {
                         {/* healthform */}
                         <div className="bg-white w-full h-[360px] rounded-2xl overflow-hidden p-4">
                             <div className="relative left-[20px] top-[3px]">
-                                <HealthForm />
+                                <HealthForm onResultReceived={setRiskResult} />
                             </div>
                         </div>
                         {/* risk output */}

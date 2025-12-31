@@ -12,8 +12,8 @@ export default function HealthForm({ onResultReceived }) {
         systolic_bp: "",
         diastolic_bp: "",
         calories: "",
-        sugar_intake: "",
-        fiber_intake: "",
+        sugar: "",
+        fiber: "",
     });
 
     const handleChange = (e) => {
@@ -27,10 +27,12 @@ export default function HealthForm({ onResultReceived }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        console.log("1. Submit started"); // Check if button works
         try {
             const response = await api.post("/risk-factor", healthData);
-            const riskScore = response.data;
+            console.log("2. API responded:", response.data); // Check if Python works
+            console.log(response.data);
+            const riskScore = Number(response.data.risk_score.toFixed(2));
             let riskLevel;
             if (riskScore < 0.4) {
                 riskLevel = "low";
@@ -39,17 +41,23 @@ export default function HealthForm({ onResultReceived }) {
             } else {
                 riskLevel = "high";
             }
-
+            console.log("3. Calling parent with:", {
+                score: riskScore,
+                level: riskLevel,
+            });
             const {
                 data: { user },
             } = await supabase.auth.getUser();
 
+            const { sugar, fiber, ...restOfData } = healthData;
             const { error: healthError } = await supabase
                 .from("health_profiles")
                 .insert([
                     {
                         user_id: user.id,
-                        ...healthData,
+                        ...restOfData,
+                        sugar_intake: sugar,
+                        fiber_intake: fiber,
                         updated_at: new Date(),
                     },
                 ]);
@@ -69,7 +77,6 @@ export default function HealthForm({ onResultReceived }) {
             onResultReceived({ score: riskScore, level: riskLevel });
         } catch (error) {
             console.log(error);
-            console.log(healthData);
             alert("Error occured submitting form");
         }
     };
@@ -196,8 +203,8 @@ export default function HealthForm({ onResultReceived }) {
                 <input
                     type="number"
                     id="sugar"
-                    name="sugar_intake"
-                    value={healthData.sugar_intake}
+                    name="sugar"
+                    value={healthData.sugar}
                     onChange={handleChange}
                     class="border p-2 rounded-2xl"
                 ></input>
@@ -207,8 +214,8 @@ export default function HealthForm({ onResultReceived }) {
                 <input
                     type="number"
                     id="fiber"
-                    name="fiber_intake"
-                    value={healthData.fiber_intake}
+                    name="fiber"
+                    value={healthData.fiber}
                     onChange={handleChange}
                     class="border p-2 rounded-2xl"
                 ></input>

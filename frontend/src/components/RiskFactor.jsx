@@ -1,5 +1,5 @@
 export default function RiskFactor({ score, level }) {
-    if (!score) {
+    if (score === null || score === undefined) {
         return (
             <div>
                 <button
@@ -14,15 +14,15 @@ export default function RiskFactor({ score, level }) {
     } else {
         const isHigh = level === "high";
         const isMed = level === "medium";
-        const textColor = "text-red-700"
-            ? isHigh
-            : "text-yellow-700"
-            ? isMed
+        const textColor = isHigh
+            ? "text-red-700"
+            : isMed
+            ? "text-yellow-700"
             : "text-green-700";
         return (
             <p>
-                Your risk of diabetes is
-                <span className={"`font-bold ${textColor}`"}>{level}</span>
+                Your risk of diabetes is{" "}
+                <span className={`font-bold ${textColor}`}>{level}</span>
             </p>
         );
     }
