@@ -46,7 +46,7 @@ export default function HealthForm({ onResultReceived }) {
             const { sugar, fiber, ...restOfData } = healthData;
             const { error: healthError } = await supabase
                 .from("health_profiles")
-                .insert([
+                .upsert(
                     {
                         user_id: user.id,
                         ...restOfData,
@@ -54,19 +54,21 @@ export default function HealthForm({ onResultReceived }) {
                         fiber_intake: fiber,
                         updated_at: new Date(),
                     },
-                ]);
+                    { onConflict: "user_id" }
+                );
             if (healthError) throw healthError;
 
             const { error: riskError } = await supabase
                 .from("risk_assessments")
-                .insert([
+                .upsert(
                     {
                         user_id: user.id,
                         risk_score: riskScore,
                         risk_level: riskLevel,
                         created_at: new Date(),
                     },
-                ]);
+                    { onConflict: "user_id" }
+                );
             if (riskError) throw riskError;
             console.log(healthData);
             onResultReceived({ score: riskScore, level: riskLevel });

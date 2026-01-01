@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
 
-export default function UserForm() {
+export default function UserForm({ onNameReceived }) {
     const [userData, setUserData] = useState({
         fullName: "",
         dob: "",
@@ -27,6 +27,9 @@ export default function UserForm() {
                     fullName: profile?.full_name || "",
                     dob: profile?.dob || "",
                 });
+                if (profile?.full_name) {
+                    onNameReceived(profile.full_name);
+                }
             }
         };
         fetchProfile();
@@ -55,10 +58,9 @@ export default function UserForm() {
             .select();
         if (userError) {
             console.log("error occured", error);
-        } else if (data.length === 0) {
-            console.log("0 rows updated");
         } else {
             console.log("Successfully updated");
+            onNameChange(userData.fullName);
         }
     };
 
