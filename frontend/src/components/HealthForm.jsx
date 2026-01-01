@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import api from "../api";
 import { supabase } from "../supabaseClient";
 
@@ -15,6 +15,33 @@ export default function HealthForm({ onResultReceived }) {
         sugar: "",
         fiber: "",
     });
+
+    useEffect(() => {
+        const fetchHealthData = async () => {
+            const {
+                data: { user },
+            } = await supabase.auth.getUser();
+
+            if (user) {
+                const { data, error } = await supabase
+                    .from("health_profiles")
+                    .select("*")
+                    .eq("user_id", user.id)
+                    .maybeSingle();
+                if (error) console.log("error loading data", error);
+
+                if (data) {
+                    const { sugar_intake, fiber_intake, ...rest } = data;
+                    setHealthData({
+                        sugar: sugar_intake,
+                        fiber: fiber_intake,
+                        ...rest,
+                    });
+                }
+            }
+        };
+        fetchHealthData();
+    }, []);
 
     const handleChange = (e) => {
         const { name, value, type } = e.target;
