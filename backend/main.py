@@ -10,7 +10,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware, 
-    allow_origins=['http://localhost:3000'], # later change with react app url
+    allow_origins=['http://localhost:5173'], # later change with react app url
     allow_credentials=True,
     allow_methods=['*'],
     allow_headers=['*'],
@@ -63,10 +63,5 @@ def predict_risk(data: PatientData):
             'risk_score': risk_score
         }
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        return {'error': str(e)}, 500
 
-
-
-
-
-    
