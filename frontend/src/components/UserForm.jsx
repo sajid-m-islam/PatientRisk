@@ -19,9 +19,9 @@ export default function UserForm({ onNameReceived }) {
             if (user) {
                 const { data: profile, error: profileError } = await supabase
                     .from("users")
-                    .select("full_name, dob, height, weight")
+                    .select("*")
                     .eq("id", user.id)
-                    .single();
+                    .maybeSingle();
                 if (profileError)
                     console.log("error loading data", profileError);
 
@@ -68,7 +68,7 @@ export default function UserForm({ onNameReceived }) {
             console.log("error occured", error);
         } else {
             console.log("Successfully updated");
-            onNameChange(userData.fullName);
+            onNameReceived(userData.fullName);
         }
     };
 
@@ -109,7 +109,7 @@ export default function UserForm({ onNameReceived }) {
                     className="border p-1 rounded-md"
                 ></input>
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col gap-2">
                 <label>Height:</label>
                 <div className="flex gap-2">
                     <label htmlFor="feet">Feet: </label>
@@ -119,7 +119,7 @@ export default function UserForm({ onNameReceived }) {
                         value={userData.feet}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        className="border p-1 rounded-md"
+                        className="border p-1 rounded-md w-16"
                     ></input>
                     <label htmlFor="inches">Inches: </label>
                     <input
@@ -128,7 +128,7 @@ export default function UserForm({ onNameReceived }) {
                         value={userData.inches}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        className="border p-1 rounded-md"
+                        className="border p-1 rounded-md w-16"
                     ></input>
                 </div>
             </div>
@@ -140,7 +140,7 @@ export default function UserForm({ onNameReceived }) {
                     value={userData.weight}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    className="border p-1 rounded-md"
+                    className="border p-1 rounded-md w-20"
                 ></input>
             </div>
         </form>
