@@ -90,7 +90,7 @@ export default function HealthForm({ onResultReceived }) {
                     name="gender"
                     value={healthData.gender}
                     onChange={handleChange}
-                    class="border p-2 rounded-2xl"
+                    className="border p-2 rounded-2xl"
                 >
                     <option value="" selected disabled>
                         Choose
@@ -107,7 +107,7 @@ export default function HealthForm({ onResultReceived }) {
                     name="age"
                     value={healthData.age}
                     onChange={handleChange}
-                    class="border p-2 rounded-2xl"
+                    className="border p-2 rounded-2xl"
                 ></input>
                 <br></br>
                 <label htmlFor="ethnicity">Ethnicity: </label>
@@ -117,7 +117,7 @@ export default function HealthForm({ onResultReceived }) {
                     name="ethnicity"
                     value={healthData.ethnicity}
                     onChange={handleChange}
-                    class="border p-2 rounded-2xl"
+                    className="border p-2 rounded-2xl"
                 >
                     <option value="" selected disabled>
                         Choose
@@ -144,7 +144,7 @@ export default function HealthForm({ onResultReceived }) {
                     name="bmi"
                     value={healthData.bmi}
                     onChange={handleChange}
-                    class="border p-2 rounded-2xl"
+                    className="border p-2 rounded-2xl"
                 ></input>
                 <br></br>
                 <label htmlFor="waist">Waist Circumference: </label>
@@ -155,7 +155,7 @@ export default function HealthForm({ onResultReceived }) {
                     name="waist_circ"
                     value={healthData.waist_circ}
                     onChange={handleChange}
-                    class="border p-2 rounded-2xl"
+                    className="border p-2 rounded-2xl"
                 ></input>
                 <br></br>
             </div>
@@ -168,7 +168,7 @@ export default function HealthForm({ onResultReceived }) {
                     name="systolic_bp"
                     value={healthData.systolic_bp}
                     onChange={handleChange}
-                    class="border p-2 rounded-2xl"
+                    className="border p-2 rounded-2xl"
                 ></input>
                 <br></br>
                 <label htmlFor="diastolic">Diastolic Blood Pressure: </label>
@@ -179,7 +179,7 @@ export default function HealthForm({ onResultReceived }) {
                     name="diastolic_bp"
                     value={healthData.diastolic_bp}
                     onChange={handleChange}
-                    class="border p-2 rounded-2xl"
+                    className="border p-2 rounded-2xl"
                 ></input>
                 <br></br>
                 <label htmlFor="calories">Calories: </label>
@@ -190,7 +190,7 @@ export default function HealthForm({ onResultReceived }) {
                     name="calories"
                     value={healthData.calories}
                     onChange={handleChange}
-                    class="border p-2 rounded-2xl"
+                    className="border p-2 rounded-2xl"
                 ></input>
                 <br></br>
                 <label htmlFor="sugar">Sugar Intake: </label>
@@ -201,7 +201,7 @@ export default function HealthForm({ onResultReceived }) {
                     name="sugar"
                     value={healthData.sugar}
                     onChange={handleChange}
-                    class="border p-2 rounded-2xl"
+                    className="border p-2 rounded-2xl"
                 ></input>
                 <br></br>
                 <label htmlFor="fiber">Fiber Intake: </label>
@@ -212,7 +212,7 @@ export default function HealthForm({ onResultReceived }) {
                     name="fiber"
                     value={healthData.fiber}
                     onChange={handleChange}
-                    class="border p-2 rounded-2xl"
+                    className="border p-2 rounded-2xl"
                 ></input>
                 <br></br>
             </div>

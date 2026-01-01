@@ -9,18 +9,27 @@ export default function UserForm() {
     });
 
     useEffect(() => {
-        const getEmail = async () => {
+        const fetchProfile = async () => {
             const {
                 data: { user },
             } = await supabase.auth.getUser();
             if (user) {
-                setUserData((prev) => ({
-                    ...prev,
+                const { data: profile, error: profileError } = await supabase
+                    .from("users")
+                    .select("full_name, dob")
+                    .eq("id", user.id)
+                    .single();
+                if (profileError)
+                    console.log("error loading data", profileError);
+
+                setUserData({
                     email: user.email,
-                }));
+                    fullName: profile?.full_name || "",
+                    dob: profile?.dob || "",
+                });
             }
         };
-        getEmail();
+        fetchProfile();
     }, []);
 
     const handleChange = async (e) => {
