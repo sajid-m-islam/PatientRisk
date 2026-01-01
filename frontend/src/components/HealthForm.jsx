@@ -176,7 +176,7 @@ export default function HealthForm({ onResultReceived }) {
                     className="border p-2 rounded-2xl"
                 ></input>
                 <br></br>
-                <label htmlFor="waist">Waist Circumference: </label>
+                <label htmlFor="waist">Waist Circumference (cm): </label>
                 <br></br>
                 <input
                     type="number"
@@ -211,7 +211,7 @@ export default function HealthForm({ onResultReceived }) {
                     className="border p-2 rounded-2xl"
                 ></input>
                 <br></br>
-                <label htmlFor="calories">Calories: </label>
+                <label htmlFor="calories">Calories (per day): </label>
                 <br></br>
                 <input
                     type="number"
@@ -222,7 +222,7 @@ export default function HealthForm({ onResultReceived }) {
                     className="border p-2 rounded-2xl"
                 ></input>
                 <br></br>
-                <label htmlFor="sugar">Sugar Intake: </label>
+                <label htmlFor="sugar">Sugar Intake (grams per day): </label>
                 <br></br>
                 <input
                     type="number"
@@ -233,7 +233,7 @@ export default function HealthForm({ onResultReceived }) {
                     className="border p-2 rounded-2xl"
                 ></input>
                 <br></br>
-                <label htmlFor="fiber">Fiber Intake: </label>
+                <label htmlFor="fiber">Fiber Intake (grams per day): </label>
                 <br></br>
                 <input
                     type="number"

@@ -5,6 +5,7 @@ import { ThemeSupa } from "@supabase/auth-ui-shared";
 import UserForm from "./components/UserForm";
 import HealthForm from "./components/HealthForm";
 import RiskFactor from "./components/RiskFactor";
+import RiskBar from "./components/RiskBar";
 
 export default function App() {
     const [session, setSession] = useState(null);
@@ -76,6 +77,7 @@ export default function App() {
                                         score={riskResult.score}
                                         level={riskResult.level}
                                     />
+                                    <RiskBar score={riskResult.score} />
                                 </div>
                             </div>
                         </div>

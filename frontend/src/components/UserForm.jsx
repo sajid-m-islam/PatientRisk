@@ -6,6 +6,9 @@ export default function UserForm({ onNameReceived }) {
         fullName: "",
         dob: "",
         email: "",
+        feet: "",
+        inches: "",
+        weight: "",
     });
 
     useEffect(() => {
@@ -16,7 +19,7 @@ export default function UserForm({ onNameReceived }) {
             if (user) {
                 const { data: profile, error: profileError } = await supabase
                     .from("users")
-                    .select("full_name, dob")
+                    .select("full_name, dob, height, weight")
                     .eq("id", user.id)
                     .single();
                 if (profileError)
@@ -26,6 +29,9 @@ export default function UserForm({ onNameReceived }) {
                     email: user.email,
                     fullName: profile?.full_name || "",
                     dob: profile?.dob || "",
+                    feet: Math.floor(profile?.height_inches / 12) || "",
+                    inches: profile?.height_inches % 12 || "",
+                    weight: profile?.weight || "",
                 });
                 if (profile?.full_name) {
                     onNameReceived(profile.full_name);
@@ -53,6 +59,8 @@ export default function UserForm({ onNameReceived }) {
             .update({
                 full_name: userData.fullName,
                 dob: userData.dob,
+                height_inches: userData.feet * 12 + userData.inches,
+                weight: userData.weight,
             })
             .eq("id", user.id)
             .select();
@@ -96,6 +104,40 @@ export default function UserForm({ onNameReceived }) {
                     type="date"
                     name="dob"
                     value={userData.dob}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className="border p-1 rounded-md"
+                ></input>
+            </div>
+            <div className="flex flex-col">
+                <label>Height:</label>
+                <div className="flex gap-2">
+                    <label htmlFor="feet">Feet: </label>
+                    <input
+                        type="number"
+                        name="feet"
+                        value={userData.feet}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className="border p-1 rounded-md"
+                    ></input>
+                    <label htmlFor="inches">Inches: </label>
+                    <input
+                        type="number"
+                        name="inches"
+                        value={userData.inches}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className="border p-1 rounded-md"
+                    ></input>
+                </div>
+            </div>
+            <div className="flex flex-col">
+                <label htmlFor="weight">Weight:</label>
+                <input
+                    type="number"
+                    name="weight"
+                    value={userData.weight}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     className="border p-1 rounded-md"
