@@ -39,10 +39,6 @@ export default function HealthForm({ onResultReceived }) {
             } else {
                 riskLevel = "high";
             }
-            console.log("3. Calling parent with:", {
-                score: riskScore,
-                level: riskLevel,
-            });
             const {
                 data: { user },
             } = await supabase.auth.getUser();
@@ -84,10 +80,10 @@ export default function HealthForm({ onResultReceived }) {
         <form
             id="risk-form"
             onSubmit={handleSubmit}
-            className="grid grid-cols-2 gap-0"
+            className="grid grid-cols-2 gap-2"
         >
             <div>
-                <label for="gender">Gender: </label>
+                <label htmlFor="gender">Gender: </label>
                 <br></br>
                 <select
                     id="gender"
@@ -103,7 +99,7 @@ export default function HealthForm({ onResultReceived }) {
                     <option value="Female">Female</option>
                 </select>
                 <br></br>
-                <label for="age">Age: </label>
+                <label htmlFor="age">Age: </label>
                 <br></br>
                 <input
                     type="number"
@@ -114,7 +110,7 @@ export default function HealthForm({ onResultReceived }) {
                     class="border p-2 rounded-2xl"
                 ></input>
                 <br></br>
-                <label for="ethnicity">Ethnicity: </label>
+                <label htmlFor="ethnicity">Ethnicity: </label>
                 <br></br>
                 <select
                     id="ethnicity"
@@ -140,7 +136,7 @@ export default function HealthForm({ onResultReceived }) {
                     <option value="Other Race">Other Race</option>
                 </select>
                 <br></br>
-                <label for="bmi">BMI: </label>
+                <label htmlFor="bmi">BMI: </label>
                 <br></br>
                 <input
                     type="number"
@@ -151,7 +147,7 @@ export default function HealthForm({ onResultReceived }) {
                     class="border p-2 rounded-2xl"
                 ></input>
                 <br></br>
-                <label for="waist">Waist Circumference: </label>
+                <label htmlFor="waist">Waist Circumference: </label>
                 <br></br>
                 <input
                     type="number"
@@ -164,7 +160,7 @@ export default function HealthForm({ onResultReceived }) {
                 <br></br>
             </div>
             <div>
-                <label for="systolic">Systolic Blood Pressure: </label>
+                <label htmlFor="systolic">Systolic Blood Pressure: </label>
                 <br></br>
                 <input
                     type="number"
@@ -175,7 +171,7 @@ export default function HealthForm({ onResultReceived }) {
                     class="border p-2 rounded-2xl"
                 ></input>
                 <br></br>
-                <label for="diastolic">Diastolic Blood Pressure: </label>
+                <label htmlFor="diastolic">Diastolic Blood Pressure: </label>
                 <br></br>
                 <input
                     type="number"
@@ -186,7 +182,7 @@ export default function HealthForm({ onResultReceived }) {
                     class="border p-2 rounded-2xl"
                 ></input>
                 <br></br>
-                <label for="calories">Calories: </label>
+                <label htmlFor="calories">Calories: </label>
                 <br></br>
                 <input
                     type="number"
@@ -197,7 +193,7 @@ export default function HealthForm({ onResultReceived }) {
                     class="border p-2 rounded-2xl"
                 ></input>
                 <br></br>
-                <label for="sugar">Sugar Intake: </label>
+                <label htmlFor="sugar">Sugar Intake: </label>
                 <br></br>
                 <input
                     type="number"
@@ -208,7 +204,7 @@ export default function HealthForm({ onResultReceived }) {
                     class="border p-2 rounded-2xl"
                 ></input>
                 <br></br>
-                <label for="fiber">Fiber Intake: </label>
+                <label htmlFor="fiber">Fiber Intake: </label>
                 <br></br>
                 <input
                     type="number"

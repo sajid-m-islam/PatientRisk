@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "./supabaseClient";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
+import UserForm from "./components/UserForm";
 import HealthForm from "./components/HealthForm";
 import RiskFactor from "./components/RiskFactor";
 
@@ -55,7 +56,9 @@ export default function App() {
                     </nav>
                     <div className="bg-blue-300 flex-1 w-full flex relative">
                         {/* userform */}
-                        <div className="bg-white w-[500px] h-[600px] rounded-2xl overflow-hidden relative top-20 left-15 shadow-xl"></div>
+                        <div className="bg-white w-[500px] h-[600px] rounded-2xl overflow-hidden relative top-20 left-15 shadow-xl p-6">
+                            <UserForm />
+                        </div>
                         <div className="flex flex-col justify-between w-[700px] h-[600px] relative top-20 left-40 gap-4">
                             {/* healthform */}
                             <div className="bg-white w-full h-[360px] rounded-2xl overflow-hidden p-4 shadow-xl">

@@ -1,0 +1,95 @@
+import { useState, useEffect } from "react";
+import { supabase } from "../supabaseClient";
+
+export default function UserForm() {
+    const [userData, setUserData] = useState({
+        fullName: "",
+        dob: "",
+        email: "",
+    });
+
+    useEffect(() => {
+        const getEmail = async () => {
+            const {
+                data: { user },
+            } = await supabase.auth.getUser();
+            if (user) {
+                setUserData((prev) => ({
+                    ...prev,
+                    email: user.email,
+                }));
+            }
+        };
+        getEmail();
+    }, []);
+
+    const handleChange = async (e) => {
+        const { name, value } = e.target;
+        setUserData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
+
+    const handleBlur = async () => {
+        const {
+            data: { user },
+        } = await supabase.auth.getUser();
+
+        const { data, error: userError } = await supabase
+            .from("users")
+            .update({
+                full_name: userData.fullName,
+                dob: userData.dob,
+            })
+            .eq("id", user.id)
+            .select();
+        if (userError) {
+            console.log("error occured", error);
+        } else if (data.length === 0) {
+            console.log("0 rows updated");
+        } else {
+            console.log("Successfully updated");
+        }
+    };
+
+    return (
+        <form id="user-form" className="flex flex-col gap-6">
+            <div className="flex flex-col">
+                <label htmlFor="fullName" className="text-[26px] font-bold">
+                    Name:{" "}
+                </label>
+                <input
+                    type="text"
+                    name="fullName"
+                    value={userData.fullName}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className="border p-1 rounded-md"
+                ></input>
+            </div>
+            <div className="flex flex-col">
+                <label htmlFor="email">Email:</label>
+                <input
+                    type="text"
+                    name="email"
+                    value={userData.email}
+                    onChange={handleChange}
+                    readOnly
+                    className="border p-1 rounded-md"
+                ></input>
+            </div>
+            <div className="flex flex-col">
+                <label htmlFor="dob">Date of Birth:</label>
+                <input
+                    type="date"
+                    name="dob"
+                    value={userData.dob}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className="border p-1 rounded-md"
+                ></input>
+            </div>
+        </form>
+    );
+}
