@@ -1,9 +1,8 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from pydantic import BaseModel, field_validator
 from fastapi.middleware.cors import CORSMiddleware
 import tensorflow as tf
 import joblib
-import pandas as pd
 import numpy as np
 
 app = FastAPI()
@@ -52,7 +51,8 @@ class PatientData(BaseModel):
 @app.post('/risk-factor')
 def predict_risk(data: PatientData):
     try:
-        input_data = pd.DataFrame([data.model_dump()])
+        input_list = list(data.model_dump().values())
+        input_data = np.array([input_list])
         scaled_data = scaler.transform(input_data)
         
         # print(f"DEBUG - Input DataFrame:\n{input_data}")
