@@ -5,6 +5,8 @@ import tensorflow as tf
 import joblib
 import pandas as pd
 import numpy as np
+from fastapi.staticfiles import StaticFiles
+import os
 
 app = FastAPI()
 
@@ -65,4 +67,7 @@ def predict_risk(data: PatientData):
         }
     except Exception as e:
         return {'error': str(e)}, 500
+    
+
+app.mount("/", StaticFiles(directory="../dist", html=True), name="static")
 
