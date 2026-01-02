@@ -1,0 +1,8 @@
+{
+    "rewrites": [
+        {
+            "source": "/risk-factor",
+            "destination": "/api/main.py"
+        }
+    ]
+}
