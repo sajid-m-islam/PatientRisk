@@ -1,7 +1,6 @@
 fastapi
 uvicorn
 tensorflow-cpu
-scikit-learn
 numpy
 h5py
 pydantic
