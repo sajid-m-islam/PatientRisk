@@ -1,7 +1,10 @@
 fastapi
 uvicorn
 tensorflow-cpu
+pandas
 numpy
-h5py
+scikit-learn
+joblib
 pydantic
 python-multipart
+h5py
