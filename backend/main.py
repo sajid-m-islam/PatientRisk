@@ -68,6 +68,6 @@ def predict_risk(data: PatientData):
     except Exception as e:
         return {'error': str(e)}, 500
     
-
-app.mount("/", StaticFiles(directory="../dist", html=True), name="static")
+if os.path.exists("../dist"):
+    app.mount("/", StaticFiles(directory="../dist", html=True), name="static")
 
