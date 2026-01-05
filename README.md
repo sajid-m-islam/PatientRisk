@@ -12,7 +12,7 @@ https://patientrisk.onrender.com/
 -   **Frontend:** React (Vite), JavaScript
 -   **Backend:** Python (FastAPI)
 -   **Database & Auth:** Supabase
--   **Machine Learning:** Pandas, NumPy, TensorFlow
+-   **Machine Learning:** Pandas, NumPy, Pydantic, TensorFlow
 -   **Deployment:** Render
 
 ## Key Features
