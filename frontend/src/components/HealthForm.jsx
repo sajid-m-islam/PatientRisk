@@ -120,8 +120,9 @@ export default function HealthForm({ onResultReceived }) {
                     value={healthData.gender}
                     onChange={handleChange}
                     className="border p-2 rounded-2xl"
+                    required
                 >
-                    <option value="" selected disabled>
+                    <option value="" disabled>
                         Choose
                     </option>
                     <option value="Male">Male</option>
@@ -137,6 +138,7 @@ export default function HealthForm({ onResultReceived }) {
                     value={healthData.age}
                     onChange={handleChange}
                     className="border p-2 rounded-2xl"
+                    required
                 ></input>
                 <br></br>
                 <label htmlFor="ethnicity">Ethnicity: </label>
@@ -147,8 +149,9 @@ export default function HealthForm({ onResultReceived }) {
                     value={healthData.ethnicity}
                     onChange={handleChange}
                     className="border p-2 rounded-2xl"
+                    required
                 >
-                    <option value="" selected disabled>
+                    <option value="" disabled>
                         Choose
                     </option>
                     <option value="Mexican American">Mexican American</option>
@@ -174,6 +177,7 @@ export default function HealthForm({ onResultReceived }) {
                     value={healthData.bmi}
                     onChange={handleChange}
                     className="border p-2 rounded-2xl"
+                    required
                 ></input>
                 <br></br>
                 <label htmlFor="waist">Waist Circumference (cm): </label>
@@ -185,6 +189,7 @@ export default function HealthForm({ onResultReceived }) {
                     value={healthData.waist_circ}
                     onChange={handleChange}
                     className="border p-2 rounded-2xl"
+                    required
                 ></input>
                 <br></br>
             </div>
@@ -198,6 +203,7 @@ export default function HealthForm({ onResultReceived }) {
                     value={healthData.systolic_bp}
                     onChange={handleChange}
                     className="border p-2 rounded-2xl"
+                    required
                 ></input>
                 <br></br>
                 <label htmlFor="diastolic">Diastolic Blood Pressure: </label>
@@ -209,6 +215,7 @@ export default function HealthForm({ onResultReceived }) {
                     value={healthData.diastolic_bp}
                     onChange={handleChange}
                     className="border p-2 rounded-2xl"
+                    required
                 ></input>
                 <br></br>
                 <label htmlFor="calories">Calories (per day): </label>
@@ -220,6 +227,7 @@ export default function HealthForm({ onResultReceived }) {
                     value={healthData.calories}
                     onChange={handleChange}
                     className="border p-2 rounded-2xl"
+                    required
                 ></input>
                 <br></br>
                 <label htmlFor="sugar">Sugar Intake (grams per day): </label>
@@ -231,6 +239,7 @@ export default function HealthForm({ onResultReceived }) {
                     value={healthData.sugar}
                     onChange={handleChange}
                     className="border p-2 rounded-2xl"
+                    required
                 ></input>
                 <br></br>
                 <label htmlFor="fiber">Fiber Intake (grams per day): </label>
@@ -242,6 +251,7 @@ export default function HealthForm({ onResultReceived }) {
                     value={healthData.fiber}
                     onChange={handleChange}
                     className="border p-2 rounded-2xl"
+                    required
                 ></input>
                 <br></br>
             </div>

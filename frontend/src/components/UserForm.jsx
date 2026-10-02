@@ -29,8 +29,12 @@ export default function UserForm({ onNameReceived }) {
                     email: user.email,
                     fullName: profile?.full_name || "",
                     dob: profile?.dob || "",
-                    feet: Math.floor(profile?.height_inches / 12) || "",
-                    inches: profile?.height_inches % 12 || "",
+                    feet: profile?.height_inches
+                        ? Math.floor(profile.height_inches / 12)
+                        : "",
+                    inches: profile?.height_inches
+                        ? profile.height_inches % 12
+                        : "",
                     weight: profile?.weight || "",
                 });
                 if (profile?.full_name) {
@@ -54,18 +58,20 @@ export default function UserForm({ onNameReceived }) {
             data: { user },
         } = await supabase.auth.getUser();
 
+        const heightInches =
+            Number(userData.feet) * 12 + Number(userData.inches);
         const { data, error: userError } = await supabase
             .from("users")
             .update({
                 full_name: userData.fullName,
                 dob: userData.dob,
-                height_inches: userData.feet * 12 + userData.inches,
+                height_inches: heightInches,
                 weight: userData.weight,
             })
             .eq("id", user.id)
             .select();
         if (userError) {
-            console.log("error occured", error);
+            console.log("error occured", userError);
         } else {
             console.log("Successfully updated");
             onNameReceived(userData.fullName);
