@@ -3,3 +3,5 @@ data/raw
 .env
 node_modules
 .venv
+__pycache__/
+.claude/
