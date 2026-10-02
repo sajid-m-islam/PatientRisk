@@ -11,6 +11,7 @@ export default function App() {
     const [session, setSession] = useState(null);
     const [riskResult, setRiskResult] = useState({ score: null, level: null });
     const [name, setName] = useState("");
+    const [profile, setProfile] = useState(null);
 
     useEffect(() => {
         supabase.auth.getSession().then(({ data: { session } }) => {
@@ -59,7 +60,10 @@ export default function App() {
                     <div className="bg-blue-300 flex-1 w-full flex relative">
                         {/* userform */}
                         <div className="bg-white w-[500px] h-[600px] rounded-2xl overflow-hidden relative top-20 left-15 shadow-xl p-6">
-                            <UserForm onNameReceived={setName} />
+                            <UserForm
+                                onNameReceived={setName}
+                                onProfileChange={setProfile}
+                            />
                         </div>
                         <div className="flex flex-col justify-between w-[700px] h-[600px] relative top-20 left-40 gap-4">
                             {/* healthform */}
@@ -67,6 +71,7 @@ export default function App() {
                                 <div className="relative left-[20px] top-[3px]">
                                     <HealthForm
                                         onResultReceived={setRiskResult}
+                                        profile={profile}
                                     />
                                 </div>
                             </div>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
 
-export default function UserForm({ onNameReceived }) {
+export default function UserForm({ onNameReceived, onProfileChange }) {
     const [userData, setUserData] = useState({
         fullName: "",
         dob: "",
@@ -40,6 +40,11 @@ export default function UserForm({ onNameReceived }) {
                 if (profile?.full_name) {
                     onNameReceived(profile.full_name);
                 }
+                onProfileChange({
+                    dob: profile?.dob,
+                    heightInches: profile?.height_inches,
+                    weight: profile?.weight,
+                });
             }
         };
         fetchProfile();
@@ -74,6 +79,11 @@ export default function UserForm({ onNameReceived }) {
             console.log("error occured", userError);
         } else {
             console.log("Successfully updated");
+            onProfileChange({
+                dob: userData.dob,
+                heightInches,
+                weight: Number(userData.weight),
+            });
             onNameReceived(userData.fullName);
         }
     };
@@ -139,7 +149,7 @@ export default function UserForm({ onNameReceived }) {
                 </div>
             </div>
             <div className="flex flex-col">
-                <label htmlFor="weight">Weight:</label>
+                <label htmlFor="weight">Weight (lbs):</label>
                 <input
                     type="number"
                     name="weight"
