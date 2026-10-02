@@ -2,7 +2,28 @@ import { useState, useEffect } from "react";
 import api from "../api";
 import { supabase } from "../supabaseClient";
 
-export default function HealthForm({ onResultReceived }) {
+// age in whole years from a "YYYY-MM-DD" date of birth
+function ageFromDob(dob) {
+    const birth = new Date(dob);
+    if (isNaN(birth)) return null;
+    const today = new Date();
+    let age = today.getFullYear() - birth.getFullYear();
+    const hadBirthday =
+        today.getMonth() > birth.getMonth() ||
+        (today.getMonth() === birth.getMonth() &&
+            today.getDate() >= birth.getDate());
+    if (!hadBirthday) age -= 1;
+    return age;
+}
+
+// BMI from height (inches) and weight (lbs)
+function bmiFromProfile(heightInches, weight) {
+    if (!(heightInches > 0 && weight > 0)) return null;
+    return Math.round(((703 * weight) / heightInches ** 2) * 10) / 10;
+}
+
+export default function HealthForm({ onResultReceived, profile }) {
+    const [loaded, setLoaded] = useState(false);
     const [healthData, setHealthData] = useState({
         gender: "",
         age: "",
@@ -39,9 +60,21 @@ export default function HealthForm({ onResultReceived }) {
                     });
                 }
             }
+            setLoaded(true);
         };
         fetchHealthData();
     }, []);
+
+    // fill age and BMI from the profile; runs after saved data loads so it wins
+    useEffect(() => {
+        if (!loaded || !profile) return;
+        const derived = {};
+        const age = profile.dob ? ageFromDob(profile.dob) : null;
+        const bmi = bmiFromProfile(profile.heightInches, profile.weight);
+        if (age !== null) derived.age = age;
+        if (bmi !== null) derived.bmi = bmi;
+        setHealthData((prev) => ({ ...prev, ...derived }));
+    }, [profile, loaded]);
 
     const handleChange = (e) => {
         const { name, value, type } = e.target;
@@ -120,15 +153,21 @@ export default function HealthForm({ onResultReceived }) {
                     value={healthData.gender}
                     onChange={handleChange}
                     className="border p-2 rounded-2xl"
+                    required
                 >
-                    <option value="" selected disabled>
+                    <option value="" disabled>
                         Choose
                     </option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                 </select>
                 <br></br>
-                <label htmlFor="age">Age: </label>
+                <label htmlFor="age">
+                    Age:{" "}
+                    <span className="text-xs text-gray-500">
+                        (from profile)
+                    </span>
+                </label>
                 <br></br>
                 <input
                     type="number"
@@ -137,6 +176,7 @@ export default function HealthForm({ onResultReceived }) {
                     value={healthData.age}
                     onChange={handleChange}
                     className="border p-2 rounded-2xl"
+                    required
                 ></input>
                 <br></br>
                 <label htmlFor="ethnicity">Ethnicity: </label>
@@ -147,8 +187,9 @@ export default function HealthForm({ onResultReceived }) {
                     value={healthData.ethnicity}
                     onChange={handleChange}
                     className="border p-2 rounded-2xl"
+                    required
                 >
-                    <option value="" selected disabled>
+                    <option value="" disabled>
                         Choose
                     </option>
                     <option value="Mexican American">Mexican American</option>
@@ -165,7 +206,12 @@ export default function HealthForm({ onResultReceived }) {
                     <option value="Other Race">Other Race</option>
                 </select>
                 <br></br>
-                <label htmlFor="bmi">BMI: </label>
+                <label htmlFor="bmi">
+                    BMI:{" "}
+                    <span className="text-xs text-gray-500">
+                        (from profile)
+                    </span>
+                </label>
                 <br></br>
                 <input
                     type="number"
@@ -174,6 +220,7 @@ export default function HealthForm({ onResultReceived }) {
                     value={healthData.bmi}
                     onChange={handleChange}
                     className="border p-2 rounded-2xl"
+                    required
                 ></input>
                 <br></br>
                 <label htmlFor="waist">Waist Circumference (cm): </label>
@@ -185,6 +232,7 @@ export default function HealthForm({ onResultReceived }) {
                     value={healthData.waist_circ}
                     onChange={handleChange}
                     className="border p-2 rounded-2xl"
+                    required
                 ></input>
                 <br></br>
             </div>
@@ -198,6 +246,7 @@ export default function HealthForm({ onResultReceived }) {
                     value={healthData.systolic_bp}
                     onChange={handleChange}
                     className="border p-2 rounded-2xl"
+                    required
                 ></input>
                 <br></br>
                 <label htmlFor="diastolic">Diastolic Blood Pressure: </label>
@@ -209,6 +258,7 @@ export default function HealthForm({ onResultReceived }) {
                     value={healthData.diastolic_bp}
                     onChange={handleChange}
                     className="border p-2 rounded-2xl"
+                    required
                 ></input>
                 <br></br>
                 <label htmlFor="calories">Calories (per day): </label>
@@ -220,6 +270,7 @@ export default function HealthForm({ onResultReceived }) {
                     value={healthData.calories}
                     onChange={handleChange}
                     className="border p-2 rounded-2xl"
+                    required
                 ></input>
                 <br></br>
                 <label htmlFor="sugar">Sugar Intake (grams per day): </label>
@@ -231,6 +282,7 @@ export default function HealthForm({ onResultReceived }) {
                     value={healthData.sugar}
                     onChange={handleChange}
                     className="border p-2 rounded-2xl"
+                    required
                 ></input>
                 <br></br>
                 <label htmlFor="fiber">Fiber Intake (grams per day): </label>
@@ -242,6 +294,7 @@ export default function HealthForm({ onResultReceived }) {
                     value={healthData.fiber}
                     onChange={handleChange}
                     className="border p-2 rounded-2xl"
+                    required
                 ></input>
                 <br></br>
             </div>

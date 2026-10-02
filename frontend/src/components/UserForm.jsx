@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
 
-export default function UserForm({ onNameReceived }) {
+export default function UserForm({ onNameReceived, onProfileChange }) {
     const [userData, setUserData] = useState({
         fullName: "",
         dob: "",
@@ -29,13 +29,22 @@ export default function UserForm({ onNameReceived }) {
                     email: user.email,
                     fullName: profile?.full_name || "",
                     dob: profile?.dob || "",
-                    feet: Math.floor(profile?.height_inches / 12) || "",
-                    inches: profile?.height_inches % 12 || "",
+                    feet: profile?.height_inches
+                        ? Math.floor(profile.height_inches / 12)
+                        : "",
+                    inches: profile?.height_inches
+                        ? profile.height_inches % 12
+                        : "",
                     weight: profile?.weight || "",
                 });
                 if (profile?.full_name) {
                     onNameReceived(profile.full_name);
                 }
+                onProfileChange({
+                    dob: profile?.dob,
+                    heightInches: profile?.height_inches,
+                    weight: profile?.weight,
+                });
             }
         };
         fetchProfile();
@@ -54,20 +63,27 @@ export default function UserForm({ onNameReceived }) {
             data: { user },
         } = await supabase.auth.getUser();
 
+        const heightInches =
+            Number(userData.feet) * 12 + Number(userData.inches);
         const { data, error: userError } = await supabase
             .from("users")
             .update({
                 full_name: userData.fullName,
                 dob: userData.dob,
-                height_inches: userData.feet * 12 + userData.inches,
+                height_inches: heightInches,
                 weight: userData.weight,
             })
             .eq("id", user.id)
             .select();
         if (userError) {
-            console.log("error occured", error);
+            console.log("error occured", userError);
         } else {
             console.log("Successfully updated");
+            onProfileChange({
+                dob: userData.dob,
+                heightInches,
+                weight: Number(userData.weight),
+            });
             onNameReceived(userData.fullName);
         }
     };
@@ -133,7 +149,7 @@ export default function UserForm({ onNameReceived }) {
                 </div>
             </div>
             <div className="flex flex-col">
-                <label htmlFor="weight">Weight:</label>
+                <label htmlFor="weight">Weight (lbs):</label>
                 <input
                     type="number"
                     name="weight"

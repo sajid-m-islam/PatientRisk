@@ -6,7 +6,9 @@ import joblib
 import pandas as pd
 import numpy as np
 from fastapi.staticfiles import StaticFiles
-import os
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent
 
 app = FastAPI()
 
@@ -19,11 +21,12 @@ app.add_middleware(
 )
 
 try:
-    model = tf.keras.models.load_model('model.keras')
-    scaler = joblib.load('scaler.pkl')
+    model = tf.keras.models.load_model(BASE / 'model.keras')
+    scaler = joblib.load(BASE / 'scaler.pkl')
     print('Model loaded successfully')
 except Exception as e:
     print('Failed to load model')
+    raise
 
 class PatientData(BaseModel):
     gender: str
@@ -41,12 +44,16 @@ class PatientData(BaseModel):
     @classmethod
     def convert_gender(cls, v: str) -> int:
         mapping = {'Male': 1, 'Female': 2}
+        if v not in mapping:
+            raise ValueError(f'gender must be one of {list(mapping)}')
         return mapping[v]
 
     @field_validator('ethnicity')
     @classmethod
     def convert_ethnicity(cls, v: str) -> int:
-        mapping = {'Mexican American': 1, 'Other Hispanic': 2, 'Non-Hispanic White': 3, 'Non-Hispanic Black': 4, 'Non-Hispanic Asian': 5, 'Other Race': 7}
+        mapping = {'Mexican American': 1, 'Other Hispanic': 2, 'Non-Hispanic White': 3, 'Non-Hispanic Black': 4, 'Non-Hispanic Asian': 6, 'Other Race': 7}
+        if v not in mapping:
+            raise ValueError(f'ethnicity must be one of {list(mapping)}')
         return mapping[v]
 
 
@@ -68,6 +75,6 @@ def predict_risk(data: PatientData):
     except Exception as e:
         return {'error': str(e)}, 500
     
-if os.path.exists("../dist"):
-    app.mount("/", StaticFiles(directory="../dist", html=True), name="static")
+if (BASE.parent / 'dist').exists():
+    app.mount("/", StaticFiles(directory=BASE.parent / 'dist', html=True), name="static")
 
